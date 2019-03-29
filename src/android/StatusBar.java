@@ -89,7 +89,7 @@ public class StatusBar extends CordovaPlugin {
         }
 
         if ("height".equals(action)) {
-            int statusBarHeight = getStatusBarHeight();
+            float statusBarHeight = getStatusBarHeight();
             callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, statusBarHeight));
             return true;
         }
