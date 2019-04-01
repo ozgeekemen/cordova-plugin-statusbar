@@ -72,6 +72,11 @@ interface StatusBar {
     * Read this property to see if the statusbar is visible or not.
     */
     isVisible: boolean;
+
+    /**
+     * Get the statusbar's height
+     */
+    height: (onSuccessCallBack: (height: number) => number) => void;
 }
 
 declare var StatusBar: StatusBar;
