@@ -76,7 +76,7 @@ interface StatusBar {
     /**
      * Get the statusbar's height
      */
-    height: (onSuccessCallBack: (height: number) => number) => void;
+    height: (onSuccess: (height: number) => any, onError: (error: any) => any) => void;
 }
 
 declare var StatusBar: StatusBar;

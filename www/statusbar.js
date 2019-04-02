@@ -42,8 +42,8 @@ var namedColors = {
 
 var StatusBar = {
 
-    height: function (onSuccessCallBack) {
-        exec(onSuccessCallBack, null, "StatusBar", "height", []);
+    height: function (onSuccess, onError) {
+        exec(onSuccess, onError, "StatusBar", "height", []);
     },
 
     isVisible: true,
