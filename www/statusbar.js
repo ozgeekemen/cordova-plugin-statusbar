@@ -42,6 +42,10 @@ var namedColors = {
 
 var StatusBar = {
 
+    height: function (onSuccess, onError) {
+        exec(onSuccess, onError, "StatusBar", "height", []);
+    },
+
     isVisible: true,
 
     overlaysWebView: function (doOverlay) {
