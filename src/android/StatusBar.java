@@ -39,6 +39,8 @@ import java.util.Arrays;
 public class StatusBar extends CordovaPlugin {
     private static final String TAG = "StatusBar";
 
+    private boolean _isVisible = true;
+
     /**
      * Sets the context of the Command. This can then be used to do things like
      * get file paths associated with the Activity.
@@ -51,9 +53,15 @@ public class StatusBar extends CordovaPlugin {
         LOG.v(TAG, "StatusBar: initialization");
         super.initialize(cordova, webView);
 
+        StatusBar statusbar = this;
+
         this.cordova.getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                //https://github.com/apache/cordova-plugin-statusbar/issues/110
+                //This corrects keyboard behaviour when overlaysWebView is true
+                StatusBarViewHelper.assist(cordova.getActivity(), statusbar);
+                
                 // Clear flag FLAG_FORCE_NOT_FULLSCREEN which is set initially
                 // by the Cordova.
                 Window window = cordova.getActivity().getWindow();
@@ -66,6 +74,10 @@ public class StatusBar extends CordovaPlugin {
                 setStatusBarStyle(preferences.getString("StatusBarStyle", "lightcontent"));
             }
         });
+    }
+
+    public boolean isVisible() {
+        return _isVisible;
     }
 
     /**
@@ -111,6 +123,8 @@ public class StatusBar extends CordovaPlugin {
                     // CB-11197 We still need to update LayoutParams to force status bar
                     // to be hidden when entering e.g. text fields
                     window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+                    _isVisible = true;
                 }
             });
             return true;
@@ -133,6 +147,8 @@ public class StatusBar extends CordovaPlugin {
                     // CB-11197 We still need to update LayoutParams to force status bar
                     // to be hidden when entering e.g. text fields
                     window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+                    _isVisible = false;
                 }
             });
             return true;
